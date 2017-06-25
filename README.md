@@ -2,7 +2,7 @@
 
 Smart Audio 2 HoTT Telemetrie Arduino Mini Pro
 
-circuit diagram
+* # circuit diagram
 ![](https://github.com/Ziege-One/SA2Hott/blob/master/Docu/SA2HoTT.jpg?raw=true)
 
 
