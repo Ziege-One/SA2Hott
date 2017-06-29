@@ -169,7 +169,12 @@ void SmartAudio::sa_command(uint8_t cmd, uint32_t value){
     
     Serial.end();//clear buffer, otherwise sa_tx_packet is received
     Serial.begin(4900);
-    UCSR0B &= ~(1<<TXEN0);  //deactivate tx --> rx mode listening for respons
+    #if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__) //Code in here will only be compiled if an Arduino Uno (or older) is used.
+      UCSR0B &= ~(1<<TXEN0);  //deactivate tx --> rx mode listening for respons
+    #endif
+    #if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega16U4__) //Code in here will only be compiled if an Arduino Leonardo is used.
+      UCSR1B &= ~(1<<TXEN1);  //deactivate tx --> rx mode listening for respons
+    #endif 
   
   delay(100);
   

@@ -7,37 +7,55 @@
  
  */
 
-#define HOTTV4_RXTX 3           // Pin für HoTT Telemetrie Ausgang
-#define LEDPIN_OFF              PORTB &= ~(1<<5);
-#define LEDPIN_ON               PORTB |= (1<<5);
-
 #include "Message.h"
-#include "Sensor.h"
 #include "SmartAudio.h"
+#include "Sensor.h"
 #include <EEPROM.h>
 #include <SoftwareSerial.h>
+ 
+#if defined(__AVR_ATmega328P__) || defined(__AVR_ATmega168__) //Code in here will only be compiled if an Arduino Uno (or older) is used.
+  #define HOTTV4_RXTX 3           // Pin für HoTT Telemetrie Ausgang 2-7
+  /**
+    * Enables RX and disables TX
+    */
+  static inline void hottV4EnableReceiverMode() {
+    DDRD  &= ~(1 << HOTTV4_RXTX);
+    PORTD |= (1 << HOTTV4_RXTX);
+  }
+
+  /**
+    * Enabels TX and disables RX
+    */
+  static inline void hottV4EnableTransmitterMode() {
+    DDRD |= (1 << HOTTV4_RXTX);
+  }
+#endif
+#if defined(__AVR_ATmega32U4__) || defined(__AVR_ATmega16U4__) //Code in here will only be compiled if an Arduino Leonardo is used.
+  #define HOTTV4_RXTX 9           // Pin für HoTT Telemetrie Ausgang 8-11
+  /**
+    * Enables RX and disables TX
+    */
+  static inline void hottV4EnableReceiverMode() {
+    DDRB  &= ~(1 << (HOTTV4_RXTX - 4));
+    PORTB |= (1 << (HOTTV4_RXTX - 4));
+  }
+
+  /**
+    * Enabels TX and disables RX
+    */
+  static inline void hottV4EnableTransmitterMode() {
+    DDRB |= (1 << (HOTTV4_RXTX - 4));
+  }
+#endif 
+
+#define LEDPIN_OFF        digitalWrite(LED_BUILTIN, LOW);
+#define LEDPIN_ON         digitalWrite(LED_BUILTIN, HIGH);
 
 // Einfügen Sensor.cpp Funktionen
 Sensor lipo;
 SmartAudio smarta2;
 
- 
 SoftwareSerial SERIAL_HOTT(HOTTV4_RXTX , HOTTV4_RXTX); // RX, TX
-
-/**
- * Enables RX and disables TX
- */
-static inline void hottV4EnableReceiverMode() {
-  DDRD &= ~(1 << HOTTV4_RXTX);
-  PORTD |= (1 << HOTTV4_RXTX);
-}
-
-/**
- * Enabels TX and disables RX
- */
-static inline void hottV4EnableTransmitterMode() {
-  DDRD |= (1 << HOTTV4_RXTX);
-}
 
 static uint8_t _hott_serial_buffer[173];   //creating a buffer variable to store the struct
 

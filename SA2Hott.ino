@@ -42,11 +42,10 @@
 #include "SmartAudio.h"
 #include <inttypes.h>
 
-// LED an Pin 13
-#define LEDPIN_PINMODE    pinMode (13, OUTPUT);
-#define LEDPIN_SWITCH     PINB |= 1<<5;     //switch LEDPIN state (digital PIN 13)
-#define LEDPIN_OFF        PORTB &= ~(1<<5);
-#define LEDPIN_ON         PORTB |= (1<<5);
+// LED 
+#define LEDPIN_PINMODE    pinMode (LED_BUILTIN, OUTPUT);
+#define LEDPIN_OFF        digitalWrite(LED_BUILTIN, LOW);
+#define LEDPIN_ON         digitalWrite(LED_BUILTIN, HIGH);
 
 //#define Debug                             // Ein/Aus Debugging
 
