@@ -357,16 +357,14 @@ void GMessage::main_loop(){
                     //LINE 3 SELECTED = text[3]
                     else if (id_key == HOTT_KEY_UP && ligne_select == 3 )
                       {
-                        smarta2.sa_command(SA_SET_CHANNEL,smarta2.get_channel()+1);
-                        //alarm_on_off_batt1 = 1;
-                        //*alarm_on_off = " Alarm :  ON";
+                        alarm_on_off_batt1 = 1;
+                        *alarm_on_off = " Alarm :  ON";
                       }
                       
                     else if (id_key == HOTT_KEY_DOWN && ligne_select == 3 )
                       {
-                        smarta2.sa_command(SA_SET_CHANNEL,smarta2.get_channel()-1);
-                        //alarm_on_off_batt1 = 0;
-                        //*alarm_on_off = " Alarm : OFF";
+                        alarm_on_off_batt1 = 0;
+                        *alarm_on_off = " Alarm : OFF";
                        }
                       
                     else if (id_key == HOTT_KEY_SET && ligne_edit == 3)
