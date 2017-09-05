@@ -674,7 +674,7 @@ void GMessage::main_loop(){
                     //LINE 4 SELECTED = text[4]
                     else if (id_key == HOTT_KEY_UP && ligne_select == 4 )                    
                       {
-                        if (smarta2.get_channel() == 3) // Nicht über 3 dann 0
+                        if (smarta2.get_powerLevel() == 3) // Nicht über 3 dann 0
                           smarta2.sa_command(SA_SET_POWER,0);
                         else
                           smarta2.sa_command(SA_SET_POWER,smarta2.get_powerLevel() + 1);
@@ -682,7 +682,7 @@ void GMessage::main_loop(){
                       
                     else if (id_key == HOTT_KEY_DOWN && ligne_select == 4 )
                       {
-                        if (smarta2.get_channel() == 0) // Nicht unter 0 dann 3
+                        if (smarta2.get_powerLevel() == 0) // Nicht unter 0 dann 3
                           smarta2.sa_command(SA_SET_POWER,3); 
                         else
                           smarta2.sa_command(SA_SET_POWER,smarta2.get_powerLevel() - 1);
